@@ -1,0 +1,59 @@
+{
+  "endpoints": {
+    "grok-imagine-edit-image/edit_image": {
+      "unit_price_cents": 4
+    },
+    "grok-imagine-image-to-video/image_to_video": {
+      "unit_price_cents": 2,
+      "billing_config": {
+        "key": "output_resolution",
+        "overrides": {
+          "480p": 1.6,
+          "720p": 3
+        }
+      }
+    },
+    "grok-imagine-text-to-image/text_to_image": {
+      "unit_price_cents": 4,
+      "billing_config": {
+        "key": "enable_pro",
+        "overrides": {
+          "true": 5,
+          "false": 4
+        }
+      }
+    },
+    "grok-imagine-text-to-video/text_to_video": {
+      "unit_price_cents": 2,
+      "billing_config": {
+        "key": "output_resolution",
+        "overrides": {
+          "480p": 1.6,
+          "720p": 3
+        }
+      }
+    },
+    "_/extend_video": {
+      "unit_price_cents": 30,
+      "billing_config": {
+        "keys": [
+          "extension_duration_seconds",
+          "output_resolution"
+        ],
+        "matrix": {
+          "6": {
+            "480p": 10,
+            "720p": 20
+          },
+          "10": {
+            "480p": 20,
+            "720p": 30
+          }
+        }
+      }
+    },
+    "_/upscale_image": {
+      "unit_price_cents": 10
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "catalog_models": [
+    "grok-imagine-edit-image",
+    "grok-imagine-image-to-video",
+    "grok-imagine-text-to-image",
+    "grok-imagine-text-to-video"
+  ],
+  "actions": {
+    "grok-imagine/edit-image": {
+      "model": "Grok Imagine",
+      "endpoint": "edit_image",
+      "models": [
+        "grok-imagine-edit-image"
+      ],
+      "fields_by_model": {
+        "grok-imagine-edit-image": {}
+      }
+    },
+    "grok-imagine/extend": {
+      "model": "Grok Imagine",
+      "endpoint": "extend_video",
+      "models": [],
+      "fields_by_model": {
+        "_": {
+          "extension_duration_seconds": {
+            "enum": [
+              6,
+              10
+            ]
+          }
+        }
+      }
+    },
+    "grok-imagine/image-to-video": {
+      "model": "Grok Imagine",
+      "endpoint": "image_to_video",
+      "models": [
+        "grok-imagine-image-to-video"
+      ],
+      "fields_by_model": {
+        "grok-imagine-image-to-video": {
+          "aspect_ratio": {
+            "enum": [
+              "2:3",
+              "3:2",
+              "1:1",
+              "16:9",
+              "9:16"
+            ]
+          },
+          "motion_style": {
+            "enum": [
+              "fun",
+              "normal",
+              "spicy"
+            ]
+          },
+          "output_resolution": {
+            "enum": [
+              "480p",
+              "720p"
+            ]
+          }
+        }
+      }
+    },
+    "grok-imagine/text-to-image": {
+      "model": "Grok Imagine",
+      "endpoint": "text_to_image",
+      "models": [
+        "grok-imagine-text-to-image"
+      ],
+      "fields_by_model": {
+        "grok-imagine-text-to-image": {
+          "aspect_ratio": {
+            "enum": [
+              "2:3",
+              "3:2",
+              "1:1",
+              "16:9",
+              "9:16"
+            ]
+          }
+        }
+      }
+    },
+    "grok-imagine/text-to-video": {
+      "model": "Grok Imagine",
+      "endpoint": "text_to_video",
+      "models": [
+        "grok-imagine-text-to-video"
+      ],
+      "fields_by_model": {
+        "grok-imagine-text-to-video": {
+          "aspect_ratio": {
+            "enum": [
+              "2:3",
+              "3:2",
+              "1:1",
+              "16:9",
+              "9:16"
+            ]
+          },
+          "motion_style": {
+            "enum": [
+              "fun",
+              "normal",
+              "spicy"
+            ]
+          },
+          "output_resolution": {
+            "enum": [
+              "480p",
+              "720p"
+            ]
+          }
+        }
+      }
+    },
+    "grok-imagine/upscale-image": {
+      "model": "Grok Imagine",
+      "endpoint": "upscale_image",
+      "models": [],
+      "fields_by_model": {
+        "_": {}
+      }
+    }
+  }
+}

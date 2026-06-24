@@ -1,0 +1,15 @@
+{
+  "servers": {
+    "grok-imagine": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@runapi.ai/grok-imagine-mcp"
+      ],
+      "env": {
+        "RUNAPI_API_KEY": "${RUNAPI_API_KEY}"
+      }
+    }
+  }
+}
