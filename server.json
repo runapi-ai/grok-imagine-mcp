@@ -1,23 +1,23 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.runapi-builder/grok-imagine-mcp",
-  "description": "RunAPI MCP server for Grok Imagine: create tasks, poll status, and check pricing.",
+  "description": "RunAPI MCP server for Grok Imagine: create tasks, poll status, check pricing.",
   "repository": {
     "url": "https://github.com/runapi-ai/grok-imagine-mcp",
     "source": "github"
   },
-  "version": "0.1.1",
+  "version": "0.1.2",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@runapi.ai/grok-imagine-mcp",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "transport": {
         "type": "stdio"
       },
       "environmentVariables": [
         {
-          "description": "RunAPI API key. Get one at https://runapi.ai",
+          "description": "RunAPI API key. Create one at https://runapi.ai",
           "isRequired": true,
           "format": "string",
           "isSecret": true,

@@ -1,7 +1,7 @@
-<h1 align="center">Grok Imagine MCP Server</h1>
+<h1 align="center">RunAPI Grok Imagine MCP Server</h1>
 
 <p align="center">
-  <strong>Create Grok Imagine AI tasks through RunAPI — 6 endpoints, 4 models — then poll status and check pricing. One MCP server, one API key.</strong>
+  <strong>Grok Imagine API access for AI agents: create image and video generation tasks, poll results, and check pricing through one focused MCP server.</strong>
 </p>
 
 <p align="center">
@@ -10,32 +10,33 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@runapi.ai/grok-imagine-mcp"><img src="https://img.shields.io/npm/v/%40runapi.ai/grok-imagine-mcp?style=flat-square&color=blue" alt="npm version"></a>
+  <a href="https://github.com/runapi-ai/grok-imagine-mcp"><img src="https://img.shields.io/badge/GitHub-runapi--ai%2Fgrok-imagine-mcp-24292f?style=flat-square" alt="GitHub repository"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue?style=flat-square" alt="Apache-2.0 license"></a>
   <img src="https://img.shields.io/badge/Type-MCP_Server-blue?style=flat-square" alt="MCP Server">
-  <img src="https://img.shields.io/badge/Models-4-green?style=flat-square" alt="4 models">
+  <img src="https://img.shields.io/badge/Models-4-16a34a?style=flat-square" alt="4 models">
 </p>
 
 <p align="center">
-  <a href="#quick-start">Quick Start</a> |
+  <a href="#install">Install</a> |
   <a href="#tools">Tools</a> |
   <a href="#models">Models</a> |
-  <a href="#examples">Examples</a> |
-  <a href="#configuration">Configuration</a>
+  <a href="#agent-prompts">Agent Prompts</a> |
+  <a href="#configuration">Configuration</a> |
+  <a href="#links">Links</a>
 </p>
 
 ---
 
-## What Is This?
+## Why This Package?
 
-`@runapi.ai/grok-imagine-mcp` is a focused MCP server for the **Grok Imagine** model line on RunAPI.
-It lets an MCP-compatible assistant create Grok Imagine tasks, poll their status, and check current pricing — all through a single RunAPI API key.
+`@runapi.ai/grok-imagine-mcp` is a focused Model Context Protocol server for the **Grok Imagine** model line on RunAPI.
+It gives MCP-compatible assistants direct access to 6 endpoints and 4 model variants without loading the full RunAPI catalog.
 
-`check_pricing` works without a key. Task creation and status polling require `RUNAPI_API_KEY`.
-This package is a pure client; it does not run a local generation backend.
+Use this per-model server when an agent should stay scoped to Grok Imagine. Use [`@runapi.ai/mcp`](https://github.com/runapi-ai/mcp) when one assistant should discover every RunAPI model line.
 
 ---
 
-## Quick Start
+## Install
 
 Add it to Claude Code:
 
@@ -43,10 +44,13 @@ Add it to Claude Code:
 claude mcp add grok-imagine -s user -- npx -y @runapi.ai/grok-imagine-mcp
 ```
 
-- `-s user`: global, available in all of your projects.
-- `-s project`: team-shared, written to `.mcp.json` in the current repo so it can be committed.
+Use project scope when the server should be shared with a repository:
 
-For other hosts, or for manual configuration, use this JSON:
+```bash
+claude mcp add grok-imagine -s project -- npx -y @runapi.ai/grok-imagine-mcp
+```
+
+Codex, Cursor, Windsurf, VS Code, Roo Code, and other MCP hosts can use the same stdio command:
 
 ```json
 {
@@ -60,8 +64,9 @@ For other hosts, or for manual configuration, use this JSON:
 }
 ```
 
-Create an API key at [runapi.ai](https://runapi.ai) and expose it as `RUNAPI_API_KEY`.
-See `examples/` for ready-made config files for Claude, Cursor, Windsurf, VS Code, and Roo.
+Create an API key at [runapi.ai](https://runapi.ai) and expose it as `RUNAPI_API_KEY`. `check_pricing` can run without a key; task creation and status polling require one.
+
+Ready-made examples are in [`examples/`](examples/) for Claude, Cursor, Windsurf, VS Code, and Roo Code.
 
 ---
 
@@ -69,20 +74,20 @@ See `examples/` for ready-made config files for Claude, Cursor, Windsurf, VS Cod
 
 | Tool | Auth | Purpose |
 |---|---|---|
-| `edit_image` | Yes | Create a Grok Imagine task (edit image) and optionally poll until it reaches a terminal status. Returns the task id, status, output URLs, and a price snapshot. |
-| `extend_video` | Yes | Create a Grok Imagine task (extend video) and optionally poll until it reaches a terminal status. Returns the task id, status, output URLs, and a price snapshot. |
-| `image_to_video` | Yes | Create a Grok Imagine task (image to video) and optionally poll until it reaches a terminal status. Returns the task id, status, output URLs, and a price snapshot. |
-| `text_to_image` | Yes | Create a Grok Imagine task (text to image) and optionally poll until it reaches a terminal status. Returns the task id, status, output URLs, and a price snapshot. |
-| `text_to_video` | Yes | Create a Grok Imagine task (text to video) and optionally poll until it reaches a terminal status. Returns the task id, status, output URLs, and a price snapshot. |
-| `upscale_image` | Yes | Create a Grok Imagine task (upscale image) and optionally poll until it reaches a terminal status. Returns the task id, status, output URLs, and a price snapshot. |
+| `edit_image` | Yes | Create a Grok Imagine edit image task and optionally wait for a terminal status. Returns the task id, status, output URLs, and pricing snapshot. |
+| `extend_video` | Yes | Create a Grok Imagine extend video task and optionally wait for a terminal status. Returns the task id, status, output URLs, and pricing snapshot. |
+| `image_to_video` | Yes | Create a Grok Imagine image to video task and optionally wait for a terminal status. Returns the task id, status, output URLs, and pricing snapshot. |
+| `text_to_image` | Yes | Create a Grok Imagine text to image task and optionally wait for a terminal status. Returns the task id, status, output URLs, and pricing snapshot. |
+| `text_to_video` | Yes | Create a Grok Imagine text to video task and optionally wait for a terminal status. Returns the task id, status, output URLs, and pricing snapshot. |
+| `upscale_image` | Yes | Create a Grok Imagine upscale image task and optionally wait for a terminal status. Returns the task id, status, output URLs, and pricing snapshot. |
 | `get_task` | Yes | Fetch the current status and latest payload for an existing task. |
-| `check_pricing` | No | Look up the current price for a Grok Imagine model and endpoint. |
+| `check_pricing` | No | Look up the current pricing snapshot for a Grok Imagine model and endpoint. |
 
 ---
 
 ## Models
 
-Grok Imagine covers 4 models across 6 endpoints. Each tool accepts the models listed for it:
+Grok Imagine covers 4 model variants across 6 endpoints. Each tool accepts the models listed for it:
 
 | Tool | Models |
 |---|---|
@@ -93,13 +98,13 @@ Grok Imagine covers 4 models across 6 endpoints. Each tool accepts the models li
 | `text_to_video` | `grok-imagine-text-to-video` |
 | `upscale_image` | _no model parameter_ |
 
-Call `check_pricing` for the current price of any model. Model availability can change between releases.
+Model availability can change between releases. Use `check_pricing` or the [Grok Imagine model page](https://runapi.ai/models/grok-imagine) for the current catalog view.
 
 ---
 
-## Examples
+## Agent Prompts
 
-Ask your assistant in natural language; it uses the tools to confirm pricing and run the task.
+Ask your assistant in natural language; it can inspect pricing, create the task, and return the task id plus output URLs.
 
 ### Create a task
 
@@ -107,7 +112,7 @@ Ask your assistant in natural language; it uses the tools to confirm pricing and
 Run a Grok Imagine edit image task with RunAPI.
 ```
 
-The assistant calls `check_pricing` to confirm the cost, then `edit_image`, and returns the task id, status, and output URLs.
+The assistant can call `check_pricing`, then `edit_image`, and return the task id, status, and output URLs.
 
 ### Submit without waiting
 
@@ -117,13 +122,13 @@ Create the task but don't wait for it to finish.
 
 The assistant calls the create tool with `wait: false` and returns the task id. Check on it later with `get_task`.
 
-### Check pricing
+### Check pricing before creating
 
 ```text
-What does Grok Imagine cost?
+Check current Grok Imagine pricing, then create the task if it matches my request.
 ```
 
-The assistant calls `check_pricing` and shows the current snapshot, or links to [runapi.ai/pricing](https://runapi.ai/pricing).
+The assistant calls `check_pricing` and can link to the [Grok Imagine model page](https://runapi.ai/models/grok-imagine) for the canonical catalog entry.
 
 ---
 
@@ -142,7 +147,19 @@ Example config file:
 }
 ```
 
-Do not commit real API keys. Get one at [runapi.ai](https://runapi.ai); pricing is listed at [runapi.ai/pricing](https://runapi.ai/pricing).
+Do not commit real API keys. Get one at [runapi.ai](https://runapi.ai).
+
+---
+
+## Links
+
+| Resource | URL |
+|---|---|
+| Grok Imagine model page | [https://runapi.ai/models/grok-imagine](https://runapi.ai/models/grok-imagine) |
+| npm package | [@runapi.ai/grok-imagine-mcp](https://www.npmjs.com/package/@runapi.ai/grok-imagine-mcp) |
+| GitHub repository | [runapi-ai/grok-imagine-mcp](https://github.com/runapi-ai/grok-imagine-mcp) |
+| RunAPI MCP overview | [runapi.ai/mcp](https://runapi.ai/mcp) |
+| RunAPI docs | [runapi.ai/docs](https://runapi.ai/docs) |
 
 ---
 

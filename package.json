@@ -1,7 +1,7 @@
 {
   "name": "@runapi.ai/grok-imagine-mcp",
-  "version": "0.1.1",
-  "description": "Grok Imagine MCP server for RunAPI — create Grok Imagine AI tasks (edit image, extend video, image to video), poll status, and check pricing across 4 models with one API key.",
+  "version": "0.1.2",
+  "description": "RunAPI Grok Imagine MCP server for image and video generation: create tasks, poll results, and check pricing across 4 model variants from Claude Code, Codex, Cursor, and VS Code.",
   "type": "module",
   "main": "dist/src/index.js",
   "bin": {
@@ -25,12 +25,16 @@
   },
   "keywords": [
     "runapi",
+    "runapi-ai",
     "mcp",
+    "mcp-server",
     "model-context-protocol",
-    "ai",
+    "ai-agents",
+    "claude-code",
+    "cursor",
+    "vscode",
     "grok-imagine",
     "grok-imagine-mcp",
-    "grok-imagine-ai",
     "grok-imagine-api",
     "video-generation",
     "ai-video",
@@ -39,14 +43,11 @@
     "ai-upscaling",
     "edit-image",
     "extend-video",
-    "image-to-video",
-    "text-to-image",
-    "text-to-video",
-    "upscale-image"
+    "image-to-video"
   ],
   "author": "RunAPI",
   "license": "Apache-2.0",
-  "homepage": "https://runapi.ai",
+  "homepage": "https://runapi.ai/models/grok-imagine",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/runapi-ai/grok-imagine-mcp.git"
