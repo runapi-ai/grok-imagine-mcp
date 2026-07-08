@@ -45,7 +45,7 @@ describe("grok-imagine stdio MCP server", () => {
 
     const tools = await client.listTools();
     const names = tools.tools.map((tool) => tool.name).sort();
-    expect(names).toEqual(["check_pricing","edit_image","extend_video","get_task","image_to_video","text_to_image","text_to_video","upscale_image"]);
+    expect(names).toEqual(["check_pricing","edit_image","extend_video","get_task","image_to_video","login","text_to_image","text_to_video","upscale_image"]);
 
     const pricing = await client.callTool({ name: "check_pricing", arguments: {} });
     const content = pricing.content?.[0];
