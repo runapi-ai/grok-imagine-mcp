@@ -13,6 +13,26 @@
         }
       }
     },
+    "grok-imagine-video-1.5-preview/image_to_video": {
+      "unit_price_cents": 2,
+      "billing_config": {
+        "key": "output_resolution",
+        "overrides": {
+          "480p": 1.6,
+          "720p": 3
+        }
+      }
+    },
+    "grok-imagine-video-1.5-preview/text_to_video": {
+      "unit_price_cents": 2,
+      "billing_config": {
+        "key": "output_resolution",
+        "overrides": {
+          "480p": 1.6,
+          "720p": 3
+        }
+      }
+    },
     "grok-imagine-text-to-image/text_to_image": {
       "unit_price_cents": 4,
       "billing_config": {

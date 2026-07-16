@@ -2,6 +2,7 @@
   "catalog_models": [
     "grok-imagine-edit-image",
     "grok-imagine-image-to-video",
+    "grok-imagine-video-1.5-preview",
     "grok-imagine-text-to-image",
     "grok-imagine-text-to-video"
   ],
@@ -13,7 +14,24 @@
         "grok-imagine-edit-image"
       ],
       "fields_by_model": {
-        "grok-imagine-edit-image": {}
+        "grok-imagine-edit-image": {
+          "model": {
+            "type": "string"
+          },
+          "source_image_url": {
+            "type": "string",
+            "required": true
+          },
+          "callback_url": {
+            "type": "string"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "enable_safety_checker": {
+            "type": "boolean"
+          }
+        }
       }
     },
     "grok-imagine/extend": {
@@ -22,11 +40,24 @@
       "models": [],
       "fields_by_model": {
         "_": {
+          "source_task_id": {
+            "type": "string"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "start_seconds": {
+            "type": "integer"
+          },
           "extension_duration_seconds": {
+            "type": "integer",
             "enum": [
               6,
               10
             ]
+          },
+          "callback_url": {
+            "type": "string"
           }
         }
       }
@@ -35,11 +66,62 @@
       "model": "Grok Imagine",
       "endpoint": "image_to_video",
       "models": [
-        "grok-imagine-image-to-video"
+        "grok-imagine-image-to-video",
+        "grok-imagine-video-1.5-preview"
+      ],
+      "rules": [
+        {
+          "when": {
+            "model": "grok-imagine-video-1.5-preview"
+          },
+          "forbidden": [
+            "source_task_id",
+            "index",
+            "motion_style",
+            "enable_safety_checker"
+          ]
+        }
       ],
       "fields_by_model": {
         "grok-imagine-image-to-video": {
+          "model": {
+            "type": "string"
+          },
+          "callback_url": {
+            "type": "string"
+          },
+          "source_image_urls": {
+            "type": "array"
+          },
+          "source_task_id": {
+            "type": "string"
+          },
+          "index": {
+            "type": "integer"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "motion_style": {
+            "type": "string",
+            "enum": [
+              "fun",
+              "normal",
+              "spicy"
+            ]
+          },
+          "duration_seconds": {
+            "type": "integer"
+          },
+          "output_resolution": {
+            "type": "string",
+            "enum": [
+              "480p",
+              "720p"
+            ]
+          },
           "aspect_ratio": {
+            "type": "string",
             "enum": [
               "2:3",
               "3:2",
@@ -48,18 +130,64 @@
               "9:16"
             ]
           },
+          "enable_safety_checker": {
+            "type": "boolean"
+          }
+        },
+        "grok-imagine-video-1.5-preview": {
+          "model": {
+            "type": "string"
+          },
+          "callback_url": {
+            "type": "string"
+          },
+          "source_image_urls": {
+            "type": "array",
+            "required": true
+          },
+          "source_task_id": {
+            "type": "string"
+          },
+          "index": {
+            "type": "integer"
+          },
+          "prompt": {
+            "type": "string",
+            "max": 4096,
+            "min": 1,
+            "length": true
+          },
           "motion_style": {
-            "enum": [
-              "fun",
-              "normal",
-              "spicy"
-            ]
+            "type": "string"
+          },
+          "duration_seconds": {
+            "type": "integer",
+            "max": 15,
+            "min": 1,
+            "default": 8
           },
           "output_resolution": {
+            "type": "string",
             "enum": [
               "480p",
               "720p"
-            ]
+            ],
+            "default": "480p"
+          },
+          "aspect_ratio": {
+            "type": "string",
+            "enum": [
+              "1:1",
+              "16:9",
+              "9:16",
+              "3:2",
+              "2:3",
+              "auto"
+            ],
+            "default": "auto"
+          },
+          "enable_safety_checker": {
+            "type": "boolean"
           }
         }
       }
@@ -72,7 +200,17 @@
       ],
       "fields_by_model": {
         "grok-imagine-text-to-image": {
+          "model": {
+            "type": "string"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "callback_url": {
+            "type": "string"
+          },
           "aspect_ratio": {
+            "type": "string",
             "enum": [
               "2:3",
               "3:2",
@@ -80,6 +218,12 @@
               "16:9",
               "9:16"
             ]
+          },
+          "enable_safety_checker": {
+            "type": "boolean"
+          },
+          "enable_pro": {
+            "type": "boolean"
           }
         }
       }
@@ -88,11 +232,33 @@
       "model": "Grok Imagine",
       "endpoint": "text_to_video",
       "models": [
-        "grok-imagine-text-to-video"
+        "grok-imagine-text-to-video",
+        "grok-imagine-video-1.5-preview"
+      ],
+      "rules": [
+        {
+          "when": {
+            "model": "grok-imagine-video-1.5-preview"
+          },
+          "forbidden": [
+            "motion_style",
+            "enable_safety_checker"
+          ]
+        }
       ],
       "fields_by_model": {
         "grok-imagine-text-to-video": {
+          "model": {
+            "type": "string"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "callback_url": {
+            "type": "string"
+          },
           "aspect_ratio": {
+            "type": "string",
             "enum": [
               "2:3",
               "3:2",
@@ -102,17 +268,72 @@
             ]
           },
           "motion_style": {
+            "type": "string",
             "enum": [
               "fun",
               "normal",
               "spicy"
             ]
           },
+          "duration_seconds": {
+            "type": "integer"
+          },
           "output_resolution": {
+            "type": "string",
             "enum": [
               "480p",
               "720p"
             ]
+          },
+          "enable_safety_checker": {
+            "type": "boolean"
+          }
+        },
+        "grok-imagine-video-1.5-preview": {
+          "model": {
+            "type": "string"
+          },
+          "prompt": {
+            "type": "string",
+            "max": 4096,
+            "min": 1,
+            "length": true,
+            "required": true
+          },
+          "callback_url": {
+            "type": "string"
+          },
+          "aspect_ratio": {
+            "type": "string",
+            "enum": [
+              "1:1",
+              "16:9",
+              "9:16",
+              "3:2",
+              "2:3",
+              "auto"
+            ],
+            "default": "auto"
+          },
+          "motion_style": {
+            "type": "string"
+          },
+          "duration_seconds": {
+            "type": "integer",
+            "max": 15,
+            "min": 1,
+            "default": 8
+          },
+          "output_resolution": {
+            "type": "string",
+            "enum": [
+              "480p",
+              "720p"
+            ],
+            "default": "480p"
+          },
+          "enable_safety_checker": {
+            "type": "boolean"
           }
         }
       }
@@ -122,7 +343,14 @@
       "endpoint": "upscale_image",
       "models": [],
       "fields_by_model": {
-        "_": {}
+        "_": {
+          "source_task_id": {
+            "type": "string"
+          },
+          "callback_url": {
+            "type": "string"
+          }
+        }
       }
     }
   }
