@@ -13,6 +13,28 @@
         }
       }
     },
+    "grok-imagine-video-1.5-fast/image_to_video": {
+      "unit_price_cents": 39,
+      "billing_config": {
+        "key": "duration_band",
+        "overrides": {
+          "1-10": 9,
+          "11-20": 24,
+          "21-30": 39
+        }
+      }
+    },
+    "grok-imagine-video-1.5-fast/text_to_video": {
+      "unit_price_cents": 39,
+      "billing_config": {
+        "key": "duration_band",
+        "overrides": {
+          "1-10": 9,
+          "11-20": 24,
+          "21-30": 39
+        }
+      }
+    },
     "grok-imagine-video-1.5-preview/image_to_video": {
       "unit_price_cents": 2,
       "billing_config": {

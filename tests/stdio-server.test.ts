@@ -47,6 +47,11 @@ describe("grok-imagine stdio MCP server", () => {
     const names = tools.tools.map((tool) => tool.name).sort();
     expect(names).toEqual(["check_pricing","edit_image","extend_video","get_task","image_to_video","login","text_to_image","text_to_video","upscale_image"]);
 
+    for (const endpoint of []) {
+      const tool = tools.tools.find((candidate) => candidate.name === endpoint);
+      expect(tool?.inputSchema.properties, `${endpoint} is synchronous and must not expose polling controls`).not.toHaveProperty("wait");
+    }
+
     const pricing = await client.callTool({ name: "check_pricing", arguments: {} });
     const content = pricing.content?.[0];
     if (!content || content.type !== "text") {
@@ -56,7 +61,7 @@ describe("grok-imagine stdio MCP server", () => {
 
     // Every advertised model must price without naming an endpoint, even one
     // that only lives on a non-primary endpoint of a multi-endpoint line.
-    for (const model of ["grok-imagine-edit-image","grok-imagine-image-to-video","grok-imagine-video-1.5-preview","grok-imagine-text-to-image","grok-imagine-text-to-video"]) {
+    for (const model of ["grok-imagine-edit-image","grok-imagine-image-to-video","grok-imagine-video-1.5-fast","grok-imagine-video-1.5-preview","grok-imagine-text-to-image","grok-imagine-text-to-video"]) {
       const priced = await client.callTool({ name: "check_pricing", arguments: { model } });
       const pricedContent = priced.content?.[0];
       if (!pricedContent || pricedContent.type !== "text") {
@@ -67,7 +72,7 @@ describe("grok-imagine stdio MCP server", () => {
 
     // A model offered on several endpoints must report every endpoint's price
     // without naming one, not silently price only the first endpoint found.
-    const multiEndpointModels: Record<string, string[]> = {"grok-imagine-video-1.5-preview":["image_to_video","text_to_video"]};
+    const multiEndpointModels: Record<string, string[]> = {"grok-imagine-video-1.5-fast":["image_to_video","text_to_video"],"grok-imagine-video-1.5-preview":["image_to_video","text_to_video"]};
     for (const [model, actions] of Object.entries(multiEndpointModels)) {
       const spread = await client.callTool({ name: "check_pricing", arguments: { model } });
       const spreadContent = spread.content?.[0];

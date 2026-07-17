@@ -1,7 +1,7 @@
 {
   "name": "@runapi.ai/grok-imagine-mcp",
-  "version": "0.1.7",
-  "description": "RunAPI Grok Imagine MCP server for image and video generation: create tasks, poll results, and check pricing across 5 model variants from Claude Code, Codex, Cursor, and VS Code.",
+  "version": "0.1.8",
+  "description": "RunAPI Grok Imagine MCP server for image and video generation: create tasks, poll results, and check pricing across 6 model variants from Claude Code, Codex, Cursor, and VS Code.",
   "type": "module",
   "main": "dist/src/index.js",
   "bin": {
