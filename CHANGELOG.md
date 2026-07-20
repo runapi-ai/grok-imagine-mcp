@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.1.9](https://github.com/runapi-ai/grok-imagine-mcp/releases/tag/v0.1.9) - 2026-07-20
+
+### Breaking
+- Replace Grok Imagine image-to-video `source_image_urls` with scalar `source_image_url`.
+  Migration: Set `source_image_url` to the source image URL when creating an image-to-video task.
+
+
 ## [v0.1.8](https://github.com/runapi-ai/grok-imagine-mcp/releases/tag/v0.1.8) - 2026-07-17
 
 ### Changed

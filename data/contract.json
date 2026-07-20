@@ -115,8 +115,8 @@
           "callback_url": {
             "type": "string"
           },
-          "source_image_urls": {
-            "type": "array"
+          "source_image_url": {
+            "type": "string"
           },
           "reference_image_urls": {
             "type": "array"
@@ -169,8 +169,8 @@
           "callback_url": {
             "type": "string"
           },
-          "source_image_urls": {
-            "type": "array",
+          "source_image_url": {
+            "type": "string",
             "required": true
           },
           "reference_image_urls": {
@@ -223,8 +223,8 @@
           "callback_url": {
             "type": "string"
           },
-          "source_image_urls": {
-            "type": "array",
+          "source_image_url": {
+            "type": "string",
             "required": true
           },
           "reference_image_urls": {
