@@ -6,12 +6,12 @@
     "url": "https://github.com/runapi-ai/grok-imagine-mcp",
     "source": "github"
   },
-  "version": "0.1.9",
+  "version": "0.1.10",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@runapi.ai/grok-imagine-mcp",
-      "version": "0.1.9",
+      "version": "0.1.10",
       "transport": {
         "type": "stdio"
       },

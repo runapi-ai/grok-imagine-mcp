@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.1.10](https://github.com/runapi-ai/grok-imagine-mcp/releases/tag/v0.1.10) - 2026-07-23
+
+### Changed
+- Refresh the generated pricing snapshot for reviewed Preview and Fast video requests.
+
+
 ## [v0.1.9](https://github.com/runapi-ai/grok-imagine-mcp/releases/tag/v0.1.9) - 2026-07-20
 
 ### Breaking
