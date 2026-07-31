@@ -18,20 +18,26 @@
       "fields_by_model": {
         "grok-imagine-edit-image": {
           "model": {
-            "type": "string"
+            "type": "string",
+            "required": true,
+            "description": "Model slug."
           },
           "source_image_url": {
             "type": "string",
-            "required": true
+            "required": true,
+            "description": "Public source image URL."
           },
           "callback_url": {
-            "type": "string"
+            "type": "string",
+            "description": "Webhook URL for terminal Task delivery."
           },
           "prompt": {
-            "type": "string"
+            "type": "string",
+            "description": "Optional image editing instruction."
           },
           "enable_safety_checker": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Enable content safety checks."
           }
         }
       }
@@ -44,23 +50,35 @@
       "fields_by_model": {
         "_": {
           "source_task_id": {
-            "type": "string"
+            "type": "string",
+            "required": true,
+            "description": "Completed prior Grok Imagine video Task ID."
           },
           "prompt": {
-            "type": "string"
+            "type": "string",
+            "max": 5000,
+            "length": true,
+            "required": true,
+            "description": "Video continuation prompt."
           },
           "start_seconds": {
-            "type": "integer"
+            "type": "integer",
+            "min": 0,
+            "required": true,
+            "description": "Source video position in seconds where extension begins."
           },
           "extension_duration_seconds": {
             "type": "integer",
             "enum": [
               6,
               10
-            ]
+            ],
+            "required": true,
+            "description": "Extension duration in seconds."
           },
           "callback_url": {
-            "type": "string"
+            "type": "string",
+            "description": "Webhook URL for terminal Task delivery."
           }
         }
       }
@@ -110,25 +128,37 @@
       "fields_by_model": {
         "grok-imagine-image-to-video": {
           "model": {
-            "type": "string"
+            "type": "string",
+            "required": true,
+            "description": "Model slug."
           },
           "callback_url": {
-            "type": "string"
+            "type": "string",
+            "description": "Webhook URL for terminal Task delivery."
           },
           "source_image_url": {
-            "type": "string"
+            "type": "string",
+            "description": "Public source image URL; provide this or source_task_id, but not both."
           },
           "reference_image_urls": {
-            "type": "array"
+            "type": "array",
+            "description": "Not accepted by this model."
           },
           "source_task_id": {
-            "type": "string"
+            "type": "string",
+            "description": "Prior Grok Imagine text-to-image Task ID; provide this or source_image_url, but not both."
           },
           "index": {
-            "type": "integer"
+            "type": "integer",
+            "max": 5,
+            "min": 0,
+            "description": "Zero-based source image index; used only with source_task_id."
           },
           "prompt": {
-            "type": "string"
+            "type": "string",
+            "max": 5000,
+            "length": true,
+            "description": "Optional video generation prompt."
           },
           "motion_style": {
             "type": "string",
@@ -136,17 +166,23 @@
               "fun",
               "normal",
               "spicy"
-            ]
+            ],
+            "description": "Video motion style; spicy requires source_task_id."
           },
           "duration_seconds": {
-            "type": "integer"
+            "type": "integer",
+            "max": 30,
+            "min": 6,
+            "description": "Output duration in seconds."
           },
           "output_resolution": {
             "type": "string",
             "enum": [
               "480p",
               "720p"
-            ]
+            ],
+            "default": "480p",
+            "description": "Output resolution."
           },
           "aspect_ratio": {
             "type": "string",
@@ -156,43 +192,57 @@
               "1:1",
               "16:9",
               "9:16"
-            ]
+            ],
+            "description": "Output aspect ratio."
           },
           "enable_safety_checker": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Enable content safety checks."
           }
         },
         "grok-imagine-video-1.5-fast": {
           "model": {
-            "type": "string"
+            "type": "string",
+            "required": true,
+            "description": "Model slug."
           },
           "callback_url": {
-            "type": "string"
+            "type": "string",
+            "description": "Webhook URL for terminal Task delivery."
           },
           "source_image_url": {
             "type": "string",
-            "required": true
+            "required": true,
+            "description": "Public source image URL."
           },
           "reference_image_urls": {
-            "type": "array"
+            "type": "array",
+            "description": "Public reference image URLs."
           },
           "source_task_id": {
-            "type": "string"
+            "type": "string",
+            "description": "Not accepted by this model."
           },
           "index": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Not accepted by this model."
           },
           "prompt": {
-            "type": "string"
+            "type": "string",
+            "max": 5000,
+            "length": true,
+            "description": "Optional video generation prompt."
           },
           "motion_style": {
-            "type": "string"
+            "type": "string",
+            "description": "Not accepted by this model."
           },
           "duration_seconds": {
             "type": "integer",
             "max": 30,
             "min": 1,
-            "default": 8
+            "default": 8,
+            "description": "Output duration in seconds."
           },
           "output_resolution": {
             "type": "string",
@@ -200,7 +250,8 @@
               "480p",
               "720p"
             ],
-            "default": "480p"
+            "default": "480p",
+            "description": "Output resolution."
           },
           "aspect_ratio": {
             "type": "string",
@@ -210,46 +261,58 @@
               "9:16",
               "3:2",
               "2:3"
-            ]
+            ],
+            "description": "Output aspect ratio."
           },
           "enable_safety_checker": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Not accepted by this model."
           }
         },
         "grok-imagine-video-1.5-preview": {
           "model": {
-            "type": "string"
+            "type": "string",
+            "required": true,
+            "description": "Model slug."
           },
           "callback_url": {
-            "type": "string"
+            "type": "string",
+            "description": "Webhook URL for terminal Task delivery."
           },
           "source_image_url": {
             "type": "string",
-            "required": true
+            "required": true,
+            "description": "Public source image URL."
           },
           "reference_image_urls": {
-            "type": "array"
+            "type": "array",
+            "description": "Not accepted by this model."
           },
           "source_task_id": {
-            "type": "string"
+            "type": "string",
+            "description": "Not accepted by this model."
           },
           "index": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Not accepted by this model."
           },
           "prompt": {
             "type": "string",
             "max": 4096,
             "min": 1,
-            "length": true
+            "length": true,
+            "description": "Optional video generation prompt."
           },
           "motion_style": {
-            "type": "string"
+            "type": "string",
+            "description": "Not accepted by this model."
           },
           "duration_seconds": {
             "type": "integer",
             "max": 15,
             "min": 1,
-            "default": 8
+            "default": 8,
+            "description": "Output duration in seconds."
           },
           "output_resolution": {
             "type": "string",
@@ -257,7 +320,8 @@
               "480p",
               "720p"
             ],
-            "default": "480p"
+            "default": "480p",
+            "description": "Output resolution."
           },
           "aspect_ratio": {
             "type": "string",
@@ -269,10 +333,12 @@
               "2:3",
               "auto"
             ],
-            "default": "auto"
+            "default": "auto",
+            "description": "Output aspect ratio."
           },
           "enable_safety_checker": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Not accepted by this model."
           }
         }
       }
@@ -287,13 +353,20 @@
       "fields_by_model": {
         "grok-imagine-text-to-image": {
           "model": {
-            "type": "string"
+            "type": "string",
+            "required": true,
+            "description": "Model slug."
           },
           "prompt": {
-            "type": "string"
+            "type": "string",
+            "max": 5000,
+            "length": true,
+            "required": true,
+            "description": "Image generation prompt."
           },
           "callback_url": {
-            "type": "string"
+            "type": "string",
+            "description": "Webhook URL for terminal Task delivery."
           },
           "aspect_ratio": {
             "type": "string",
@@ -303,13 +376,16 @@
               "1:1",
               "16:9",
               "9:16"
-            ]
+            ],
+            "description": "Output aspect ratio."
           },
           "enable_safety_checker": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Enable content safety checks."
           },
           "enable_pro": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Enable Pro image generation mode."
           }
         }
       }
@@ -355,16 +431,24 @@
       "fields_by_model": {
         "grok-imagine-text-to-video": {
           "model": {
-            "type": "string"
+            "type": "string",
+            "required": true,
+            "description": "Model slug."
           },
           "prompt": {
-            "type": "string"
+            "type": "string",
+            "max": 5000,
+            "length": true,
+            "required": true,
+            "description": "Video generation prompt."
           },
           "callback_url": {
-            "type": "string"
+            "type": "string",
+            "description": "Webhook URL for terminal Task delivery."
           },
           "reference_image_urls": {
-            "type": "array"
+            "type": "array",
+            "description": "Not accepted by this model."
           },
           "aspect_ratio": {
             "type": "string",
@@ -374,7 +458,8 @@
               "1:1",
               "16:9",
               "9:16"
-            ]
+            ],
+            "description": "Output aspect ratio."
           },
           "motion_style": {
             "type": "string",
@@ -382,35 +467,49 @@
               "fun",
               "normal",
               "spicy"
-            ]
+            ],
+            "description": "Video motion style."
           },
           "duration_seconds": {
-            "type": "integer"
+            "type": "integer",
+            "max": 30,
+            "min": 6,
+            "description": "Output duration in seconds."
           },
           "output_resolution": {
             "type": "string",
             "enum": [
               "480p",
               "720p"
-            ]
+            ],
+            "default": "480p",
+            "description": "Output resolution."
           },
           "enable_safety_checker": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Enable content safety checks."
           }
         },
         "grok-imagine-video-1.5-fast": {
           "model": {
-            "type": "string"
+            "type": "string",
+            "required": true,
+            "description": "Model slug."
           },
           "prompt": {
             "type": "string",
-            "required": true
+            "max": 5000,
+            "length": true,
+            "required": true,
+            "description": "Video generation prompt."
           },
           "callback_url": {
-            "type": "string"
+            "type": "string",
+            "description": "Webhook URL for terminal Task delivery."
           },
           "reference_image_urls": {
-            "type": "array"
+            "type": "array",
+            "description": "Public reference image URLs."
           },
           "aspect_ratio": {
             "type": "string",
@@ -420,16 +519,19 @@
               "9:16",
               "3:2",
               "2:3"
-            ]
+            ],
+            "description": "Output aspect ratio."
           },
           "motion_style": {
-            "type": "string"
+            "type": "string",
+            "description": "Not accepted by this model."
           },
           "duration_seconds": {
             "type": "integer",
             "max": 30,
             "min": 1,
-            "default": 8
+            "default": 8,
+            "description": "Output duration in seconds."
           },
           "output_resolution": {
             "type": "string",
@@ -437,28 +539,35 @@
               "480p",
               "720p"
             ],
-            "default": "480p"
+            "default": "480p",
+            "description": "Output resolution."
           },
           "enable_safety_checker": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Not accepted by this model."
           }
         },
         "grok-imagine-video-1.5-preview": {
           "model": {
-            "type": "string"
+            "type": "string",
+            "required": true,
+            "description": "Model slug."
           },
           "prompt": {
             "type": "string",
             "max": 4096,
             "min": 1,
             "length": true,
-            "required": true
+            "required": true,
+            "description": "Video generation prompt."
           },
           "callback_url": {
-            "type": "string"
+            "type": "string",
+            "description": "Webhook URL for terminal Task delivery."
           },
           "reference_image_urls": {
-            "type": "array"
+            "type": "array",
+            "description": "Not accepted by this model."
           },
           "aspect_ratio": {
             "type": "string",
@@ -470,16 +579,19 @@
               "2:3",
               "auto"
             ],
-            "default": "auto"
+            "default": "auto",
+            "description": "Output aspect ratio."
           },
           "motion_style": {
-            "type": "string"
+            "type": "string",
+            "description": "Not accepted by this model."
           },
           "duration_seconds": {
             "type": "integer",
             "max": 15,
             "min": 1,
-            "default": 8
+            "default": 8,
+            "description": "Output duration in seconds."
           },
           "output_resolution": {
             "type": "string",
@@ -487,10 +599,12 @@
               "480p",
               "720p"
             ],
-            "default": "480p"
+            "default": "480p",
+            "description": "Output resolution."
           },
           "enable_safety_checker": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Not accepted by this model."
           }
         }
       }
@@ -503,10 +617,13 @@
       "fields_by_model": {
         "_": {
           "source_task_id": {
-            "type": "string"
+            "type": "string",
+            "required": true,
+            "description": "Completed prior Grok Imagine video Task ID."
           },
           "callback_url": {
-            "type": "string"
+            "type": "string",
+            "description": "Webhook URL for terminal Task delivery."
           }
         }
       }

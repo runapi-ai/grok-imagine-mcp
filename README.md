@@ -74,14 +74,14 @@ Ready-made examples are in [`examples/`](examples/) for Claude, Cursor, Windsurf
 
 | Tool | Auth | Purpose |
 |---|---|---|
-| `edit_image` | Yes | Create a Grok Imagine edit image task and optionally wait for a terminal status. Returns the task id, status, output URLs, and pricing snapshot. |
-| `extend_video` | Yes | Create a Grok Imagine extend video task and optionally wait for a terminal status. Returns the task id, status, output URLs, and pricing snapshot. |
-| `image_to_video` | Yes | Create a Grok Imagine image to video task and optionally wait for a terminal status. Returns the task id, status, output URLs, and pricing snapshot. |
-| `text_to_image` | Yes | Create a Grok Imagine text to image task and optionally wait for a terminal status. Returns the task id, status, output URLs, and pricing snapshot. |
-| `text_to_video` | Yes | Create a Grok Imagine text to video task and optionally wait for a terminal status. Returns the task id, status, output URLs, and pricing snapshot. |
-| `upscale_image` | Yes | Create a Grok Imagine upscale image task and optionally wait for a terminal status. Returns the task id, status, output URLs, and pricing snapshot. |
+| `edit_image` | Yes | Create a Grok Imagine edit image task and optionally wait for a terminal status. Returns the task id, status, and output URLs. |
+| `extend_video` | Yes | Create a Grok Imagine extend video task and optionally wait for a terminal status. Returns the task id, status, and output URLs. |
+| `image_to_video` | Yes | Create a Grok Imagine image to video task and optionally wait for a terminal status. Returns the task id, status, and output URLs. |
+| `text_to_image` | Yes | Create a Grok Imagine text to image task and optionally wait for a terminal status. Returns the task id, status, and output URLs. |
+| `text_to_video` | Yes | Create a Grok Imagine text to video task and optionally wait for a terminal status. Returns the task id, status, and output URLs. |
+| `upscale_image` | Yes | Create a Grok Imagine upscale image task and optionally wait for a terminal status. Returns the task id, status, and output URLs. |
 | `get_task` | Yes | Fetch the current status and latest payload for an existing task. |
-| `check_pricing` | No | Look up the current pricing snapshot for a Grok Imagine model and endpoint. |
+| `check_pricing` | No | Look up current pricing for a Grok Imagine model and endpoint. |
 
 ---
 
