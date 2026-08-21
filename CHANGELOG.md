@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.1.12](https://github.com/runapi-ai/grok-imagine-mcp/releases/tag/v0.1.12) - 2026-08-21
+
+### Added
+- Add Image 2.0 text-to-image, segment-map, and segment-backed image editing tools.
+
+
 ## [v0.1.11](https://github.com/runapi-ai/grok-imagine-mcp/releases/tag/v0.1.11) - 2026-07-31
 
 ### Changed

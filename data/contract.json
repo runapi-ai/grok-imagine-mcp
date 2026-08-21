@@ -1,6 +1,7 @@
 {
   "catalog_models": [
     "grok-imagine-edit-image",
+    "grok-imagine-image-2-0",
     "grok-imagine-image-to-video",
     "grok-imagine-video-1.5-fast",
     "grok-imagine-video-1.5-preview",
@@ -13,7 +14,28 @@
       "endpoint": "edit_image",
       "task_type": "asynchronous",
       "models": [
-        "grok-imagine-edit-image"
+        "grok-imagine-edit-image",
+        "grok-imagine-image-2-0"
+      ],
+      "rules": [
+        {
+          "when": {
+            "model": "grok-imagine-edit-image"
+          },
+          "forbidden": [
+            "source_task_id",
+            "mask_indices"
+          ]
+        },
+        {
+          "when": {
+            "model": "grok-imagine-image-2-0"
+          },
+          "forbidden": [
+            "source_image_url",
+            "enable_safety_checker"
+          ]
+        }
       ],
       "fields_by_model": {
         "grok-imagine-edit-image": {
@@ -27,6 +49,14 @@
             "required": true,
             "description": "Public source image URL."
           },
+          "source_task_id": {
+            "type": "string",
+            "description": "Not accepted by this model."
+          },
+          "mask_indices": {
+            "type": "array",
+            "description": "Not accepted by this model."
+          },
           "callback_url": {
             "type": "string",
             "description": "Webhook URL for terminal Task delivery."
@@ -38,6 +68,44 @@
           "enable_safety_checker": {
             "type": "boolean",
             "description": "Enable content safety checks."
+          }
+        },
+        "grok-imagine-image-2-0": {
+          "model": {
+            "type": "string",
+            "required": true,
+            "description": "Model slug."
+          },
+          "source_image_url": {
+            "type": "string",
+            "description": "Not accepted by this model."
+          },
+          "source_task_id": {
+            "type": "string",
+            "required": true,
+            "description": "Completed Image 2.0 segment-map Task ID."
+          },
+          "mask_indices": {
+            "type": "array",
+            "items": {
+              "min": 1,
+              "type": "integer"
+            },
+            "min_items": 1,
+            "description": "Optional segment indexes to edit."
+          },
+          "callback_url": {
+            "type": "string",
+            "description": "Webhook URL for terminal Task delivery."
+          },
+          "prompt": {
+            "type": "string",
+            "required": true,
+            "description": "Image editing prompt."
+          },
+          "enable_safety_checker": {
+            "type": "boolean",
+            "description": "Not accepted by this model."
           }
         }
       }
@@ -119,7 +187,6 @@
           "forbidden": [
             "source_task_id",
             "index",
-            "reference_image_urls",
             "motion_style",
             "enable_safety_checker"
           ]
@@ -286,7 +353,8 @@
           },
           "reference_image_urls": {
             "type": "array",
-            "description": "Not accepted by this model."
+            "max_items": 6,
+            "description": "Additional public reference image URLs; source plus references may total seven images."
           },
           "source_task_id": {
             "type": "string",
@@ -318,7 +386,8 @@
             "type": "string",
             "enum": [
               "480p",
-              "720p"
+              "720p",
+              "1080p"
             ],
             "default": "480p",
             "description": "Output resolution."
@@ -343,14 +412,88 @@
         }
       }
     },
+    "grok-imagine/segment-map": {
+      "model": "Grok Imagine",
+      "endpoint": "segment_map",
+      "task_type": "asynchronous",
+      "models": [
+        "grok-imagine-image-2-0"
+      ],
+      "fields_by_model": {
+        "grok-imagine-image-2-0": {
+          "model": {
+            "type": "string",
+            "required": true,
+            "description": "Model slug."
+          },
+          "source_task_id": {
+            "type": "string",
+            "required": true,
+            "description": "Completed Image 2.0 text-to-image Task ID."
+          },
+          "callback_url": {
+            "type": "string",
+            "description": "Webhook URL for terminal Task delivery."
+          }
+        }
+      }
+    },
     "grok-imagine/text-to-image": {
       "model": "Grok Imagine",
       "endpoint": "text_to_image",
       "task_type": "asynchronous",
       "models": [
+        "grok-imagine-image-2-0",
         "grok-imagine-text-to-image"
       ],
+      "rules": [
+        {
+          "when": {
+            "model": "grok-imagine-image-2-0"
+          },
+          "forbidden": [
+            "enable_safety_checker",
+            "enable_pro"
+          ]
+        }
+      ],
       "fields_by_model": {
+        "grok-imagine-image-2-0": {
+          "model": {
+            "type": "string",
+            "required": true,
+            "description": "Model slug."
+          },
+          "prompt": {
+            "type": "string",
+            "required": true,
+            "description": "Image generation prompt."
+          },
+          "callback_url": {
+            "type": "string",
+            "description": "Webhook URL for terminal Task delivery."
+          },
+          "aspect_ratio": {
+            "type": "string",
+            "enum": [
+              "1:1",
+              "2:3",
+              "3:2",
+              "16:9",
+              "9:16"
+            ],
+            "required": true,
+            "description": "Output aspect ratio."
+          },
+          "enable_safety_checker": {
+            "type": "boolean",
+            "description": "Not accepted by this model."
+          },
+          "enable_pro": {
+            "type": "boolean",
+            "description": "Not accepted by this model."
+          }
+        },
         "grok-imagine-text-to-image": {
           "model": {
             "type": "string",
@@ -422,7 +565,6 @@
             "model": "grok-imagine-video-1.5-preview"
           },
           "forbidden": [
-            "reference_image_urls",
             "motion_style",
             "enable_safety_checker"
           ]
@@ -567,7 +709,8 @@
           },
           "reference_image_urls": {
             "type": "array",
-            "description": "Not accepted by this model."
+            "max_items": 7,
+            "description": "Public reference image URLs; 1080p accepts at most one image."
           },
           "aspect_ratio": {
             "type": "string",
@@ -597,7 +740,8 @@
             "type": "string",
             "enum": [
               "480p",
-              "720p"
+              "720p",
+              "1080p"
             ],
             "default": "480p",
             "description": "Output resolution."

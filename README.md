@@ -13,7 +13,7 @@
   <a href="https://github.com/runapi-ai/grok-imagine-mcp"><img src="https://img.shields.io/badge/GitHub-runapi--ai%2Fgrok--imagine--mcp-24292f?style=flat-square" alt="GitHub repository"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue?style=flat-square" alt="Apache-2.0 license"></a>
   <img src="https://img.shields.io/badge/Type-MCP_Server-blue?style=flat-square" alt="MCP Server">
-  <img src="https://img.shields.io/badge/Models-6-16a34a?style=flat-square" alt="6 models">
+  <img src="https://img.shields.io/badge/Models-7-16a34a?style=flat-square" alt="7 models">
 </p>
 
 <p align="center">
@@ -30,7 +30,7 @@
 ## Why This Package?
 
 `@runapi.ai/grok-imagine-mcp` is a focused Model Context Protocol server for the **Grok Imagine** model line on RunAPI.
-It gives MCP-compatible assistants direct access to 6 endpoints and 6 model variants without loading the full RunAPI catalog.
+It gives MCP-compatible assistants direct access to 7 endpoints and 7 model variants without loading the full RunAPI catalog.
 
 Use this per-model server when an agent should stay scoped to Grok Imagine. Use [`@runapi.ai/mcp`](https://github.com/runapi-ai/mcp) when one assistant should discover every RunAPI model line.
 
@@ -77,6 +77,7 @@ Ready-made examples are in [`examples/`](examples/) for Claude, Cursor, Windsurf
 | `edit_image` | Yes | Create a Grok Imagine edit image task and optionally wait for a terminal status. Returns the task id, status, and output URLs. |
 | `extend_video` | Yes | Create a Grok Imagine extend video task and optionally wait for a terminal status. Returns the task id, status, and output URLs. |
 | `image_to_video` | Yes | Create a Grok Imagine image to video task and optionally wait for a terminal status. Returns the task id, status, and output URLs. |
+| `segment_map` | Yes | Create a Grok Imagine segment map task and optionally wait for a terminal status. Returns the task id, status, and output URLs. |
 | `text_to_image` | Yes | Create a Grok Imagine text to image task and optionally wait for a terminal status. Returns the task id, status, and output URLs. |
 | `text_to_video` | Yes | Create a Grok Imagine text to video task and optionally wait for a terminal status. Returns the task id, status, and output URLs. |
 | `upscale_image` | Yes | Create a Grok Imagine upscale image task and optionally wait for a terminal status. Returns the task id, status, and output URLs. |
@@ -87,14 +88,15 @@ Ready-made examples are in [`examples/`](examples/) for Claude, Cursor, Windsurf
 
 ## Models
 
-Grok Imagine covers 6 model variants across 6 endpoints. Each tool accepts the models listed for it:
+Grok Imagine covers 7 model variants across 7 endpoints. Each tool accepts the models listed for it:
 
 | Tool | Models |
 |---|---|
-| `edit_image` | `grok-imagine-edit-image` |
+| `edit_image` | `grok-imagine-edit-image`, `grok-imagine-image-2-0` |
 | `extend_video` | _no model parameter_ |
 | `image_to_video` | `grok-imagine-image-to-video`, `grok-imagine-video-1.5-fast`, `grok-imagine-video-1.5-preview` |
-| `text_to_image` | `grok-imagine-text-to-image` |
+| `segment_map` | `grok-imagine-image-2-0` |
+| `text_to_image` | `grok-imagine-image-2-0`, `grok-imagine-text-to-image` |
 | `text_to_video` | `grok-imagine-text-to-video`, `grok-imagine-video-1.5-fast`, `grok-imagine-video-1.5-preview` |
 | `upscale_image` | _no model parameter_ |
 

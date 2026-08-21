@@ -57,7 +57,7 @@ describe("grok-imagine stdio MCP server", () => {
 
     const tools = await client.listTools();
     const names = tools.tools.map((tool) => tool.name).sort();
-    expect(names).toEqual(["check_pricing","edit_image","extend_video","get_task","image_to_video","login","text_to_image","text_to_video","upscale_image"]);
+    expect(names).toEqual(["check_pricing","edit_image","extend_video","get_task","image_to_video","login","segment_map","text_to_image","text_to_video","upscale_image"]);
 
     for (const endpoint of []) {
       const tool = tools.tools.find((candidate) => candidate.name === endpoint);
@@ -84,7 +84,7 @@ describe("grok-imagine stdio MCP server", () => {
 
     // A model offered on several endpoints must report every endpoint's price
     // without naming one, not silently price only the first endpoint found.
-    const multiEndpointModels: Record<string, string[]> = {"grok-imagine-video-1.5-fast":["image_to_video","text_to_video"],"grok-imagine-video-1.5-preview":["image_to_video","text_to_video"]};
+    const multiEndpointModels: Record<string, string[]> = {"grok-imagine-image-2-0":["edit_image","segment_map","text_to_image"],"grok-imagine-video-1.5-fast":["image_to_video","text_to_video"],"grok-imagine-video-1.5-preview":["image_to_video","text_to_video"]};
     for (const [model, actions] of Object.entries(multiEndpointModels)) {
       const spread = await client.callTool({ name: "check_pricing", arguments: { model } });
       const spreadContent = spread.content?.[0];
