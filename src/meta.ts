@@ -1,5 +1,5 @@
 export const META = {
   name: "@runapi.ai/grok-imagine-mcp",
-  version: "0.1.13",
+  version: "0.1.14",
   lineSlug: "grok-imagine"
 } as const;

@@ -1,5 +1,20 @@
 # Changelog
 
+## [v0.1.14](https://github.com/runapi-ai/grok-imagine-mcp/releases/tag/v0.1.14) - 2026-09-04
+
+### Breaking
+- Correct Image 2.0 edit validation to require source_image_urls and aspect_ratio instead of task-based edit fields.
+  Migration: Replace source_task_id and mask_indices with one to five source_image_urls and an aspect_ratio; prompt is optional.
+
+### Added
+- Add Image 2.0 text-to-image, segment-map, and segment-backed image editing tools.
+- Accept public image_url inputs for Image 2.0 segment-map requests.
+
+### Deprecated
+- Deprecate source_task_id for Image 2.0 segment-map requests.
+  Replacement: Send image_url instead; source_task_id remains accepted for compatibility.
+
+
 ## [v0.1.13](https://github.com/runapi-ai/grok-imagine-mcp/releases/tag/v0.1.13) - 2026-08-25
 
 ### Breaking
