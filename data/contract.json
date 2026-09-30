@@ -17,30 +17,6 @@
         "grok-imagine-edit-image",
         "grok-imagine-image-2-0"
       ],
-      "rules": [
-        {
-          "when": {
-            "model": "grok-imagine-edit-image"
-          },
-          "forbidden": [
-            "source_task_id",
-            "mask_indices",
-            "source_image_urls",
-            "aspect_ratio"
-          ]
-        },
-        {
-          "when": {
-            "model": "grok-imagine-image-2-0"
-          },
-          "forbidden": [
-            "source_image_url",
-            "source_task_id",
-            "mask_indices",
-            "enable_safety_checker"
-          ]
-        }
-      ],
       "fields_by_model": {
         "grok-imagine-edit-image": {
           "model": {
@@ -183,38 +159,6 @@
         "grok-imagine-image-to-video",
         "grok-imagine-video-1.5-fast",
         "grok-imagine-video-1.5-preview"
-      ],
-      "rules": [
-        {
-          "when": {
-            "model": "grok-imagine-image-to-video"
-          },
-          "forbidden": [
-            "reference_image_urls"
-          ]
-        },
-        {
-          "when": {
-            "model": "grok-imagine-video-1.5-fast"
-          },
-          "forbidden": [
-            "source_task_id",
-            "index",
-            "motion_style",
-            "enable_safety_checker"
-          ]
-        },
-        {
-          "when": {
-            "model": "grok-imagine-video-1.5-preview"
-          },
-          "forbidden": [
-            "source_task_id",
-            "index",
-            "motion_style",
-            "enable_safety_checker"
-          ]
-        }
       ],
       "fields_by_model": {
         "grok-imagine-image-to-video": {
@@ -443,34 +387,6 @@
       "models": [
         "grok-imagine-image-2-0"
       ],
-      "rules": [
-        {
-          "required_any": [
-            "image_url",
-            "source_task_id"
-          ]
-        },
-        {
-          "when": {
-            "image_url": {
-              "present": true
-            }
-          },
-          "forbidden": [
-            "source_task_id"
-          ]
-        },
-        {
-          "when": {
-            "source_task_id": {
-              "present": true
-            }
-          },
-          "forbidden": [
-            "image_url"
-          ]
-        }
-      ],
       "fields_by_model": {
         "grok-imagine-image-2-0": {
           "model": {
@@ -500,17 +416,6 @@
       "models": [
         "grok-imagine-image-2-0",
         "grok-imagine-text-to-image"
-      ],
-      "rules": [
-        {
-          "when": {
-            "model": "grok-imagine-image-2-0"
-          },
-          "forbidden": [
-            "enable_safety_checker",
-            "enable_pro"
-          ]
-        }
       ],
       "fields_by_model": {
         "grok-imagine-image-2-0": {
@@ -583,6 +488,7 @@
           },
           "enable_pro": {
             "type": "boolean",
+            "default": false,
             "description": "Enable Pro image generation mode."
           }
         }
@@ -596,34 +502,6 @@
         "grok-imagine-text-to-video",
         "grok-imagine-video-1.5-fast",
         "grok-imagine-video-1.5-preview"
-      ],
-      "rules": [
-        {
-          "when": {
-            "model": "grok-imagine-text-to-video"
-          },
-          "forbidden": [
-            "reference_image_urls"
-          ]
-        },
-        {
-          "when": {
-            "model": "grok-imagine-video-1.5-fast"
-          },
-          "forbidden": [
-            "motion_style",
-            "enable_safety_checker"
-          ]
-        },
-        {
-          "when": {
-            "model": "grok-imagine-video-1.5-preview"
-          },
-          "forbidden": [
-            "motion_style",
-            "enable_safety_checker"
-          ]
-        }
       ],
       "fields_by_model": {
         "grok-imagine-text-to-video": {
