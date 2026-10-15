@@ -185,7 +185,7 @@
           },
           "index": {
             "type": "integer",
-            "max": 5,
+            "max": 1,
             "min": 0,
             "description": "Zero-based source image index; used only with source_task_id."
           },
@@ -480,6 +480,7 @@
               "16:9",
               "9:16"
             ],
+            "default": "1:1",
             "description": "Output aspect ratio."
           },
           "enable_safety_checker": {

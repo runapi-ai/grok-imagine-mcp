@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.2.1](https://github.com/runapi-ai/grok-imagine-mcp/releases/tag/v0.2.1) - 2026-10-15
+
+### Changed
+- Image-to-video index now accepts 0 or 1, and text-to-image aspect_ratio documents its 1:1 default.
+
+
 ## [v0.2.0](https://github.com/runapi-ai/grok-imagine-mcp/releases/tag/v0.2.0) - 2026-09-30
 
 ### Changed
