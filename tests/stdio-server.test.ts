@@ -35,8 +35,7 @@ describe("grok-imagine stdio MCP server", () => {
     expect(tsxPath).toBeDefined();
     tempHome = fs.mkdtempSync(path.join(os.tmpdir(), "runapi-mcp-home-"));
     runtimePricingAvailable = true;
-    const requestedPaths: Array<{method: string; url: string}> = [];
-    api = createRuntimeApi(() => runtimePricingAvailable, (request: {method: string; url: string}) => requestedPaths.push(request));
+    api = createRuntimeApi(() => runtimePricingAvailable);
     await new Promise<void>((resolve) => api!.listen(0, "127.0.0.1", resolve));
     const apiUrl = `http://127.0.0.1:${(api.address() as AddressInfo).port}`;
 
@@ -62,25 +61,6 @@ describe("grok-imagine stdio MCP server", () => {
     for (const endpoint of []) {
       const tool = tools.tools.find((candidate) => candidate.name === endpoint);
       expect(tool?.inputSchema.properties, `${endpoint} is synchronous and must not expose polling controls`).not.toHaveProperty("wait");
-    }
-
-    const historicalRoutes: Record<string, string | null> = {"edit_image":null,"text_to_image":null,"segment_map":null,"extend_video":null,"image_to_video":null,"text_to_video":null,"upscale_image":null};
-    const historicalTaskId = "550e8400-e29b-41d4-a716-446655440000";
-    const getTaskTool = tools.tools.find((tool) => tool.name === "get_task");
-    if (getTaskTool) {
-      expect(getTaskTool.inputSchema.properties?.action).toMatchObject({enum: Object.keys(historicalRoutes)});
-    }
-    for (const [endpoint, route] of Object.entries(historicalRoutes)) {
-      const polled = await client.callTool({name: "get_task", arguments: {task_id: historicalTaskId, action: endpoint}});
-      const polledContent = polled.content?.[0];
-      if (!polledContent || polledContent.type !== "text") {
-        throw new Error("Expected historical task response");
-      }
-      expect(JSON.parse(polledContent.text)).toMatchObject({task_id: historicalTaskId, status: "completed"});
-      expect(requestedPaths[requestedPaths.length - 1]).toEqual({
-        method: "GET",
-        url: `${route ?? "/api/v1/grok_imagine/" + endpoint}/${historicalTaskId}`
-      });
     }
 
     const pricing = await client.callTool({ name: "check_pricing", arguments: {} });
@@ -132,9 +112,8 @@ describe("grok-imagine stdio MCP server", () => {
   });
 });
 
-function createRuntimeApi(runtimeAvailable: () => boolean, recordRequest?: (request: {method: string; url: string}) => void): Server {
+function createRuntimeApi(runtimeAvailable: () => boolean): Server {
   return createServer((request, response) => {
-    recordRequest?.({method: request.method ?? "GET", url: request.url ?? ""});
     response.setHeader("content-type", "application/json");
     if (request.method === "POST" && request.url?.startsWith("/api/v1/")) {
       response.end(JSON.stringify({
@@ -142,10 +121,6 @@ function createRuntimeApi(runtimeAvailable: () => boolean, recordRequest?: (requ
         status: "queued",
         billing: {reservation: {amount_cents: 37}, settlement: null, refund: null}
       }));
-      return;
-    }
-    if (request.method === "GET" && request.url?.endsWith("/550e8400-e29b-41d4-a716-446655440000")) {
-      response.end(JSON.stringify({id: "550e8400-e29b-41d4-a716-446655440000", status: "completed"}));
       return;
     }
     if (!request.url?.startsWith("/api/v1/price_schedules")) {

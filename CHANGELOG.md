@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.2.2](https://github.com/runapi-ai/grok-imagine-mcp/releases/tag/v0.2.2) - 2026-10-22
+
+### Fixed
+- Upgrade @modelcontextprotocol/sdk to ^1.32.1 to address security advisories.
+
+
 ## [v0.2.1](https://github.com/runapi-ai/grok-imagine-mcp/releases/tag/v0.2.1) - 2026-10-15
 
 ### Changed
